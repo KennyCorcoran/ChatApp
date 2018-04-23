@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The Bubble shape around the text message -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Border -->
+
     <stroke
         android:width="2dp"
         android:color="#000000"
         />
-    <!-- Colour backround for the message bubble -->
-    <solid android:color="#ccebff" />
-    <!-- Corners of the bubble -->
+    <solid android:color="#ffb380" />
     <corners android:radius="20dp" />
 </shape>

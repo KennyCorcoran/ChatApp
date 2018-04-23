@@ -6,15 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.example.magic.chatapp.MainActivity">
 
+    <!-- RecyclerView shows the messages while scrolling up and down -->
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/linearLayout"
-        android:id="@+id/messRec"
-        >
-        
-    </android.support.v7.widget.RecyclerView>
+        android:id="@+id/messRec" />
 
+    <!-- Layout of how the text messages are displayed-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,12 +23,13 @@
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="463dp">
 
+        <!-- Textbox to write the message -->
         <EditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:id="@+id/messageEdit"
             />
-
+        <!-- Send Button -->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
