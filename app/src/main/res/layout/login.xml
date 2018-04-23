@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Kevin Corcoran  C00110665 -->
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,7 +13,7 @@
     android:paddingTop="15dp"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.magic.chatapp.LoginActivity">
-
+    <!-- Email Login -->
     <EditText
         android:id="@+id/loginEmail"
         android:layout_width="match_parent"
@@ -28,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <!-- Password Login -->
     <EditText
         android:id="@+id/passwordLogin"
         android:layout_width="match_parent"
@@ -43,7 +44,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <!-- Login Button -->
     <Button
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -60,8 +61,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordLogin"
         app:layout_constraintVertical_bias="0.332" />
-
-
 
 
 </android.support.constraint.ConstraintLayout>

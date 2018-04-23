@@ -1,5 +1,6 @@
 package com.example.magic.chatapp;
-// Kevin Corcoran
+// Kevin Corcoran C00110665
+
 public class Message {
     private String content, userName;
 

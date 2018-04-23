@@ -1,4 +1,5 @@
 package com.example.magic.chatapp;
+// Kevin Corcoran C00110665
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
