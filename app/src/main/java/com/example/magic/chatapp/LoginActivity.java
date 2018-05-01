@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 // If the user exists it will transfer the user to the main activity
                 if(dataSnapshot.hasChild(userID)){
-                    Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent loginIntent = new Intent(LoginActivity.this, UserList.class);   //change userlist to mainactivity to pass userlist
                     startActivity(loginIntent);
                 }
             }
