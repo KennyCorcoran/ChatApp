@@ -2,7 +2,7 @@ package com.example.magic.chatapp;
 
 public class Users {
 
-    private String userName;
+    String userName;
 
     public Users(){
 

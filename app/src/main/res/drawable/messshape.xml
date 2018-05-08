@@ -4,11 +4,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Border -->
     <stroke
-        android:width="2dp"
+        android:width="0.1dp"
         android:color="#000000"
         />
     <!-- Colour backround for the message bubble -->
-    <solid android:color="#ccebff" />
-    <!-- Corners of the bubble -->
-    <corners android:radius="20dp" />
+    <solid android:color="#d4feff" />
 </shape>

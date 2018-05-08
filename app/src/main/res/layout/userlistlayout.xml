@@ -3,13 +3,13 @@
 <!-- The layout for the users -->
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/messshape"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <!-- Name of the User -->
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/usernameList"
         android:layout_width="289dp"
         android:layout_height="32dp"
         android:layout_marginBottom="8dp"

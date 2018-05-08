@@ -2,15 +2,21 @@ package com.example.magic.chatapp;
 // Kevin Corcoran C00110665
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 //import android.text.format.DateFormat;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -24,11 +30,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+
+import static java.time.LocalTime.now;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView name;
     private EditText messEdit;
     private DatabaseReference mobileDB;     //Database for the app
     private RecyclerView mobileMessList;    //Message List for the RecyclerView
@@ -40,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        name = findViewById(R.id.currentUser);      //finds currentUser id from activity main xml
         messEdit = findViewById(R.id.messageEdit);  // Gets text from id & puts it in the variable
         mobileDB = FirebaseDatabase.getInstance().getReference().child("Messages"); // Gets the child Messages from the Realtime Database
         mobileMessList = this.findViewById(R.id.messRec);   //sets the RecyclerView by finding the id messRec in activity_main xml
@@ -66,17 +73,41 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        //name.setText((CharSequence) mobileAuth);
-
     }
 
-    // Logout Button
-    public void logoutButtonClick(View view) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-        mobileAuth.signOut();// Signs out current user
-        startActivity(new Intent(MainActivity.this,LoginActivity.class));   //starts a new activity and send user to login in
+        getMenuInflater().inflate(R.menu.menu,menu);
 
+        return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id)
+        {
+            case R.id.menuSignOut:
+                mobileAuth.signOut();// Signs out current user
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));   //starts a new activity and send user to login in
+                Toast.makeText(this,"Signed Out", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.author:
+                Toast.makeText(this,"Author: Kevin Corcoran  Student No: C00110665", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.signedIn:
+                String sIn = mobileAuth.getCurrentUser().toString();
+
+                Toast.makeText(this, sIn, Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return true;
+    }
+
 
     // Send Button for sending the message to the database
     public void sendButtonClick(View view) {
@@ -93,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
             final DatabaseReference newPost = mobileDB.push();  //puts the content into the database
 
             mobileDBUsers.addValueEventListener(new ValueEventListener() {
+
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -104,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-
+                   // newPost.child("time").setValue(dataSnapshot.child("time").getValue());
                 }
 
                 @Override
@@ -138,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
                 viewHolder.setContent(model.getContent()); // sets the viewholder content
                 viewHolder.setUserName(model.getUserName()); // set the viewholder username
-                //viewHolder.setTime((String) DateFormat.format("HH:mm", model.getTime()));
+               // viewHolder.setTime(model.getTime());
             }
         };
         // sets the firebase adapter for the message list
@@ -164,11 +196,11 @@ public class MainActivity extends AppCompatActivity {
             TextView contentUser = mobileView.findViewById(R.id.usernameText);
             contentUser.setText(userName);
         }
-/*
-        public void setTime(String timeDisplay){
 
-            TextView time = mobileView.findViewById(R.id.timeStamp);
-            time.setText(timeDisplay);
-        }*/
+      //  public void setTime(String timeDisplay){
+
+       //     TextView displayTime = mobileView.findViewById(R.id.time);
+       //     displayTime.setText(timeDisplay);
+       // }
     }
 }

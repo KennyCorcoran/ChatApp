@@ -5,13 +5,13 @@ import java.util.Date;
 
 public class Message {
     private String content, userName;
-   // private Date time;
+   // private String time;
 
     public Message(){
 
     }
 
-    public Message(String content, String userName/*, Date time*/){
+    public Message(String content, String userName, String time){
 
         this.content = content;
         this.userName = userName;
@@ -34,12 +34,12 @@ public class Message {
         this.userName = userName;   //sets username as current user name
     }
 /*
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
- */
+*/
 }
