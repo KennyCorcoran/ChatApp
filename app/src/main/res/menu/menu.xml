@@ -8,7 +8,7 @@
         android:id="@+id/author"/>
     <item android:title="Signed In" app:showAsAction="never"
         android:id="@+id/signedIn"/>
-    <item android:title="Chat List" app:showAsAction="never"
+    <item android:title="People" app:showAsAction="never"
         android:id="@+id/listOfUsers"/>
 
 </menu>

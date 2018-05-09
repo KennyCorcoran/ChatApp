@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Message {
     private String content, userName;
-   // private String time;
+    private String time;
 
     public Message(){
 
@@ -15,7 +15,7 @@ public class Message {
 
         this.content = content;
         this.userName = userName;
-       // this.time = time;
+        this.time = time;
 
     }
     public String getContent(){
@@ -33,7 +33,7 @@ public class Message {
     public void setUserName(String userName) {
         this.userName = userName;   //sets username as current user name
     }
-/*
+
     public String getTime() {
         return time;
     }
@@ -41,5 +41,5 @@ public class Message {
     public void setTime(String time) {
         this.time = time;
     }
-*/
+
 }

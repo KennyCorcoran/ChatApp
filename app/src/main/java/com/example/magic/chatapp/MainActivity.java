@@ -1,13 +1,8 @@
 package com.example.magic.chatapp;
 // Kevin Corcoran C00110665
 
-import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,13 +28,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Date;
-
-import static java.time.LocalTime.now;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    Calendar calender;
+    SimpleDateFormat simpleDateFormat;
     private EditText messEdit;
     private DatabaseReference mobileDB;     //Database for the app
     private RecyclerView mobileMessList;    //Message List for the RecyclerView
@@ -48,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mobileAuthListener;  //firebase Authentication Listener for the app
     private final String CHANNEL_ID = "Notification";
     private final int NOTIFICATION_ID = 001;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+
+
+
     }
     // Creates the option menu
     @Override
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,"Author: Kevin Corcoran  Student No: C00110665", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.signedIn:
-                String sIn = mobileAuth.getCurrentUser().toString();
+                String sIn = mobileAuth.getCurrentUser().getUid().toString();
 
                 Toast.makeText(this, sIn, Toast.LENGTH_SHORT).show();
                 break;
@@ -119,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     // Send Button for sending the message to the database
     public void sendButtonClick(View view) {
 
@@ -129,8 +129,12 @@ public class MainActivity extends AppCompatActivity {
 
         final String messValue = messEdit.getText().toString().trim();  // Gets the message and puts into a string and trims it
 
+        calender = Calendar.getInstance();
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        final String dateAndTime = simpleDateFormat.format(calender.getTime());
+
         // Checks if the message is not empty
-        if (!TextUtils.isEmpty(messValue)){
+        if (!TextUtils.isEmpty(messValue) && !TextUtils.isEmpty(dateAndTime)){
             final DatabaseReference newPost = mobileDB.push();  //puts the content into the database
 
             ValueEventListener valueEventListener = mobileDBUsers.addValueEventListener(new ValueEventListener() {
@@ -146,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-                    // newPost.child("time").setValue(dataSnapshot.child("time").getValue());
+                    newPost.child("time").setValue(dateAndTime);
 
 
                 }
@@ -191,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
                 viewHolder.setContent(model.getContent()); // sets the viewholder content
                 viewHolder.setUserName(model.getUserName()); // set the viewholder username
-               // viewHolder.setTime(model.getTime());
+                viewHolder.setTime(model.getTime());
             }
         };
         // sets the firebase adapter for the message list
@@ -218,10 +222,10 @@ public class MainActivity extends AppCompatActivity {
             contentUser.setText(userName);
         }
 
-      //  public void setTime(String timeDisplay){
+        public void setTime(String timeDisplay){
 
-       //     TextView displayTime = mobileView.findViewById(R.id.time);
-       //     displayTime.setText(timeDisplay);
-       // }
+            TextView displayTime = mobileView.findViewById(R.id.time);
+            displayTime.setText(timeDisplay);
+       }
     }
 }
