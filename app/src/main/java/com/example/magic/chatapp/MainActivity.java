@@ -1,10 +1,15 @@
 package com.example.magic.chatapp;
 // Kevin Corcoran C00110665
 
+import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +22,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-//import android.text.format.DateFormat;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mobileMessList;    //Message List for the RecyclerView
     private FirebaseAuth mobileAuth;        //App firebase Authentication
     private FirebaseAuth.AuthStateListener mobileAuthListener;  //firebase Authentication Listener for the app
+    private final String CHANNEL_ID = "Notification";
+    private final int NOTIFICATION_ID = 001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
     }
-
+    // Creates the option menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -83,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //option menu select options
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -102,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
                 String sIn = mobileAuth.getCurrentUser().toString();
 
                 Toast.makeText(this, sIn, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.listOfUsers:
+                startActivity(new Intent(MainActivity.this,UserList.class));
                 break;
         }
 
@@ -123,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(messValue)){
             final DatabaseReference newPost = mobileDB.push();  //puts the content into the database
 
-            mobileDBUsers.addValueEventListener(new ValueEventListener() {
+            ValueEventListener valueEventListener = mobileDBUsers.addValueEventListener(new ValueEventListener() {
 
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -136,7 +146,9 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-                   // newPost.child("time").setValue(dataSnapshot.child("time").getValue());
+                    // newPost.child("time").setValue(dataSnapshot.child("time").getValue());
+
+
                 }
 
                 @Override
@@ -147,6 +159,15 @@ public class MainActivity extends AppCompatActivity {
             // scrolls to the position of the message list after get itemCount get the number of messages from the database
             mobileMessList.scrollToPosition(mobileMessList.getAdapter().getItemCount());
         }
+
+        NotificationCompat.Builder build = new NotificationCompat.Builder(this, CHANNEL_ID);
+        build.setSmallIcon(R.drawable.ic_launcher_foreground);
+        build.setContentTitle("New Message");
+        build.setContentText(messValue);
+        build.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(NOTIFICATION_ID,build.build());
     }
 
     @Override

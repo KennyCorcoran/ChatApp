@@ -123,8 +123,17 @@ public class UserList extends AppCompatActivity{
             protected void populateViewHolder(UserViewHolder viewHolder, Users model, int position) {
 
                 viewHolder.setUserName(model.getUserName());
+/*
+                userList.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(UserList.this,MainActivity.class));
 
-            }
+                    }
+
+                    });*/
+                }
+
         };
 
         userList.setAdapter(FireBaseRecAdapt);

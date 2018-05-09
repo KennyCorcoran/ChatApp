@@ -2,7 +2,7 @@ package com.example.magic.chatapp;
 
 public class Users {
 
-    String userName;
+    private String userName;
 
     public Users(){
 
@@ -18,8 +18,5 @@ public class Users {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
 }
