@@ -1,13 +1,18 @@
 package com.example.magic.chatapp;
 // Kevin Corcoran C00110665
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,29 +44,77 @@ public class RegisterActivity extends AppCompatActivity{
 
     }
 
+    // Creates the option menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu,menu);
+
+        return true;
+    }
+
+    //option menu select options
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id)
+        {
+
+            case R.id.author:
+                Toast.makeText(this,"Author: Kevin Corcoran  Student No: C00110665", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return true;
+    }
+
+
     public void signUpButtonClick(View view){
         // gets the content from the texboxes and puts them into the corrrect variables
         final String contentName, contentPassword, contentEmail;
         contentName = name.getText().toString().trim();
         contentPassword = password.getText().toString().trim();
         contentEmail = email.getText().toString().trim();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String passwordPattern = "^(?=.*[0-9]).{5,}$";
 
-        // checks if the variables are not empty
-        if(!TextUtils.isEmpty(contentName) && !TextUtils.isEmpty(contentPassword) && !TextUtils.isEmpty(contentEmail)){
-            // Creates the user with method
-            mobileAuth.createUserWithEmailAndPassword(contentEmail, contentPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+        if(contentEmail.matches(emailPattern)) {
 
-                    if(task.isSuccessful()){
-                        String userID = mobileAuth.getCurrentUser().getUid();   // gets current user id
-                        DatabaseReference currentUserDB = mobileDB.child(userID);   // gets database reference for the child userID
-                        currentUserDB.child("Name").setValue(contentName);  // sets the new user in the name child from the contentName
-                        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));   // sets up the new user from register to login activity
-                    }
+            if (contentPassword.matches(passwordPattern)){
+
+                // checks if the variables are not empty
+                if (!TextUtils.isEmpty(contentName) && !TextUtils.isEmpty(contentPassword) && !TextUtils.isEmpty(contentEmail)) {
+                    // Creates the user with method
+                    mobileAuth.createUserWithEmailAndPassword(contentEmail, contentPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (task.isSuccessful()) {
+                                String userID = mobileAuth.getCurrentUser().getUid();   // gets current user id
+                                DatabaseReference currentUserDB = mobileDB.child(userID);   // gets database reference for the child userID
+                                currentUserDB.child("Name").setValue(contentName);  // sets the new user in the name child from the contentName
+                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));   // sets up the new user from register to login activity
+                            }
+                        }
+                    });
                 }
-            });
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"Invalid Password Pattern (Min of 5 Chars and 1 Number)", Toast.LENGTH_SHORT).show();
+            }
         }
+        else{
+            Toast.makeText(getApplicationContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
+        }
+
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+
     }
     // skips signup if already in the dataase
     public void loginButtonClick(View view){

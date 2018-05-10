@@ -1,6 +1,7 @@
 package com.example.magic.chatapp;
 // Kevin Corcoran C00110665
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
@@ -13,6 +14,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -162,7 +164,15 @@ public class MainActivity extends AppCompatActivity {
             });
             // scrolls to the position of the message list after get itemCount get the number of messages from the database
             mobileMessList.scrollToPosition(mobileMessList.getAdapter().getItemCount());
+
+            messEdit.setText("");
         }
+
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
 
         NotificationCompat.Builder build = new NotificationCompat.Builder(this, CHANNEL_ID);
         build.setSmallIcon(R.drawable.ic_launcher_foreground);
