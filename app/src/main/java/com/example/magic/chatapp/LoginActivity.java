@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                             ifUserExists();
                         }
                         else {
-                            Toast.makeText(getApplicationContext(),"User does not exist", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"User does not exist or Invalid Password", Toast.LENGTH_SHORT).show();
                         }
 
                     }

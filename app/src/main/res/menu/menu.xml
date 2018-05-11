@@ -2,13 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:title="People" app:showAsAction="never"
+        android:id="@+id/listOfUsers"/>
+    <item android:title="Signed In" app:showAsAction="never"
+        android:id="@+id/signedIn"/>
+    <item android:title="Change Password" app:showAsAction="never"
+        android:id="@+id/changePass"/>
+    <item android:title="Change UserName" app:showAsAction="never"
+        android:id="@+id/changeUsername"/>
     <item android:title="Sign out" app:showAsAction="never"
         android:id="@+id/menuSignOut"/>
     <item android:title="Author" app:showAsAction="never"
         android:id="@+id/author"/>
-    <item android:title="Signed In" app:showAsAction="never"
-        android:id="@+id/signedIn"/>
-    <item android:title="People" app:showAsAction="never"
-        android:id="@+id/listOfUsers"/>
 
 </menu>

@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mobileMessList;    //Message List for the RecyclerView
     private FirebaseAuth mobileAuth;        //App firebase Authentication
     private FirebaseAuth.AuthStateListener mobileAuthListener;  //firebase Authentication Listener for the app
-    private final String CHANNEL_ID = "Notification";
-    private final int NOTIFICATION_ID = 001;
 
 
     @Override
@@ -77,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
-
-
     }
     // Creates the option menu
     @Override
@@ -107,12 +102,18 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,"Author: Kevin Corcoran  Student No: C00110665", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.signedIn:
-                String sIn = mobileAuth.getCurrentUser().getUid().toString();
+                String sIn = mobileAuth.getCurrentUser().getUid();
 
                 Toast.makeText(this, sIn, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.listOfUsers:
                 startActivity(new Intent(MainActivity.this,UserList.class));
+                break;
+            case R.id.changePass:
+                startActivity(new Intent(MainActivity.this,ChangePassword.class));
+                break;
+            case R.id.changeUsername:
+                startActivity(new Intent(MainActivity.this,ChangeUsername.class));
                 break;
         }
 
@@ -174,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                 InputMethodManager.HIDE_NOT_ALWAYS);
 
+        String CHANNEL_ID = "Notification";
         NotificationCompat.Builder build = new NotificationCompat.Builder(this, CHANNEL_ID);
         build.setSmallIcon(R.drawable.ic_launcher_foreground);
         build.setContentTitle("New Message");
@@ -181,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         build.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        int NOTIFICATION_ID = 1;
         notificationManagerCompat.notify(NOTIFICATION_ID,build.build());
     }
 

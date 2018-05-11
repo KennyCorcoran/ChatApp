@@ -19,6 +19,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".UserList" />
+        <activity android:name=".ChangePassword" />
+        <activity android:name=".ChangeUsername" />
     </application>
 
 </manifest>

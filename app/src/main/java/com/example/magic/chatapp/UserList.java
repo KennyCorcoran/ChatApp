@@ -93,6 +93,12 @@ public class UserList extends AppCompatActivity{
 
                 Toast.makeText(this, sIn, Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.changePass:
+                startActivity(new Intent(UserList.this,ChangePassword.class));
+                break;
+            case R.id.changeUsername:
+                startActivity(new Intent(UserList.this,ChangeUsername.class));
+                break;
         }
 
         return true;
