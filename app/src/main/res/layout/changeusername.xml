@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Kevin Corcoran  C00110665 -->
+<!-- Name: Kevin Corcoran
+     Student No: C00110665 -->
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -31,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Old Password -->
+    <!-- Old Username -->
     <EditText
         android:id="@+id/oldUsername"
         android:layout_width="match_parent"
@@ -46,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <!-- New Password -->
+    <!-- New UserName -->
     <EditText
         android:id="@+id/newUsername"
         android:layout_width="match_parent"
@@ -61,7 +62,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/oldUsername" />
 
-    <!-- Reconfirm Password -->
+    <!-- Reconfirm username -->
     <EditText
         android:id="@+id/reConUsername"
         android:layout_width="match_parent"

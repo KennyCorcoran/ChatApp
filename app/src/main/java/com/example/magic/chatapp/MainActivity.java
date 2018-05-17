@@ -1,5 +1,6 @@
 package com.example.magic.chatapp;
-// Kevin Corcoran C00110665
+// Name: Kevin Corcoran
+// Student No: C00110665
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +12,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -39,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
     Calendar calender;
     SimpleDateFormat simpleDateFormat;
     private EditText messEdit;
-    private DatabaseReference mobileDB;     //Database for the app
-    private RecyclerView mobileMessList;    //Message List for the RecyclerView
-    private FirebaseAuth mobileAuth;        //App firebase Authentication
+    private DatabaseReference mobileDB;                         //Database for the app
+    private RecyclerView mobileMessList;                        //Message List for the RecyclerView
+    private FirebaseAuth mobileAuth;                            //App firebase Authentication
     private FirebaseAuth.AuthStateListener mobileAuthListener;  //firebase Authentication Listener for the app
 
 
@@ -49,11 +53,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        messEdit = findViewById(R.id.messageEdit);  // Gets text from id & puts it in the variable
+        messEdit = findViewById(R.id.messageEdit);                                  // Gets text from id & puts it in the variable
         mobileDB = FirebaseDatabase.getInstance().getReference().child("Messages"); // Gets the child Messages from the Realtime Database
-        mobileMessList = this.findViewById(R.id.messRec);   //sets the RecyclerView by finding the id messRec in activity_main xml
-        mobileMessList.setHasFixedSize(true); //sets the message list to a fixed size
+        mobileMessList = this.findViewById(R.id.messRec);                           //sets the RecyclerView by finding the id messRec in activity_main xml
+        mobileMessList.setHasFixedSize(true);                                       //sets the message list to a fixed size
 
         // Creates a new layout manager and Sets the list to start from the end of the list
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -102,9 +105,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,"Author: Kevin Corcoran  Student No: C00110665", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.signedIn:
-                String sIn = mobileAuth.getCurrentUser().getUid();
+                mobileAuth = FirebaseAuth.getInstance();
+                final FirebaseUser theUser = mobileAuth.getCurrentUser();
+                if (theUser !=null) {
+                    String currUser = theUser.getEmail();
+                    Toast.makeText(this,currUser + " is Logged In.", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(this, sIn, Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.listOfUsers:
                 startActivity(new Intent(MainActivity.this,UserList.class));
@@ -132,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
 
         final String messValue = messEdit.getText().toString().trim();  // Gets the message and puts into a string and trims it
 
-        calender = Calendar.getInstance();
-        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        final String dateAndTime = simpleDateFormat.format(calender.getTime());
+        calender = Calendar.getInstance();                                      //Sets Calender
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");     //Sets the format for the date and time
+        final String dateAndTime = simpleDateFormat.format(calender.getTime()); //Gets and set the time
 
         // Checks if the message is not empty
         if (!TextUtils.isEmpty(messValue) && !TextUtils.isEmpty(dateAndTime)){
@@ -146,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     newPost.child("content").setValue(messValue);   //setting the newPost content as whats in messValue
+
                     //gets the name of the user snapshot child name in the database
                     newPost.child("userName").setValue(dataSnapshot.child("Name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -153,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-                    newPost.child("time").setValue(dateAndTime);
+                    newPost.child("time").setValue(dateAndTime);    //puts the date and time into the database
 
 
                 }
@@ -169,12 +177,14 @@ public class MainActivity extends AppCompatActivity {
             messEdit.setText("");
         }
 
+        //Auto hides the keyboard when message is sent
         InputMethodManager inputManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
 
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                 InputMethodManager.HIDE_NOT_ALWAYS);
 
+        //Push Notifications
         String CHANNEL_ID = "Notification";
         NotificationCompat.Builder build = new NotificationCompat.Builder(this, CHANNEL_ID);
         build.setSmallIcon(R.drawable.ic_launcher_foreground);
@@ -216,12 +226,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Recycler view for the message holder
-    public static class MessViewHolder extends RecyclerView.ViewHolder{
+    public static class MessViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/{
         View mobileView;
+      /*  private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                int itemPosition = MessViewHolder.getChildLayoutPosition(view);
+                String item = MessViewHolder.get(itemPosition);
+                Toast.makeText(mContext, item, Toast.LENGTH_LONG).show();
+            }
+        };
+
+        private static int getChildLayoutPosition(View view) {
+            return 0;
+        }*/
+
         public MessViewHolder(View itemView){
             super(itemView);
             mobileView = itemView;
         }
+
+       /* public MessViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.singlemessagelayout, parent, false);
+            view.setOnClickListener(mOnClickListener);
+            return new MessViewHolder(view);
+        }*/
 
         public void setContent(String content){
             // Sets the content into messContent from the id messageText thats in the single message layout
@@ -236,9 +266,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void setTime(String timeDisplay){
-
+            // Sets the date and time into timeDisplay from the id time thats in the single message layout
             TextView displayTime = mobileView.findViewById(R.id.time);
             displayTime.setText(timeDisplay);
        }
+
+       /* @Override
+        public void onClick(View view) {
+            int itemPosition = MessViewHolder.getChildLayoutPosition(view);
+            String item = mList.get(itemPosition);
+            Toast.makeText(mContext, item, Toast.LENGTH_LONG).show();
+        }*/
     }
 }

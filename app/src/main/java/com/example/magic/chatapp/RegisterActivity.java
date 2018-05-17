@@ -1,5 +1,6 @@
 package com.example.magic.chatapp;
-// Kevin Corcoran C00110665
+// Name: Kevin Corcoran
+// Student No: C00110665
 
 import android.content.Context;
 import android.content.Intent;
@@ -39,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity{
         email = (EditText) findViewById(R.id.emailEdit);
         password = (EditText) findViewById(R.id.passwordEdit);
 
-        mobileAuth = FirebaseAuth.getInstance();    // Gets authentication
+        mobileAuth = FirebaseAuth.getInstance();                                    // Gets authentication
         mobileDB = FirebaseDatabase.getInstance().getReference().child("Users");    // Gets the database reference from the child users
 
     }
@@ -80,6 +81,8 @@ public class RegisterActivity extends AppCompatActivity{
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String passwordPattern = "^(?=.*[0-9]).{5,}$";
 
+
+        //Error catching
         if(contentEmail.matches(emailPattern)) {
 
             if (contentPassword.matches(passwordPattern)){
@@ -109,6 +112,7 @@ public class RegisterActivity extends AppCompatActivity{
             Toast.makeText(getApplicationContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
         }
 
+        //Auto hide for keyboard
         InputMethodManager inputManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
 

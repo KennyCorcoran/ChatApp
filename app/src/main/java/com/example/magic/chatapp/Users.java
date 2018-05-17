@@ -1,8 +1,10 @@
 package com.example.magic.chatapp;
+// Name: Kevin Corcoran
+// Student No: C00110665
 
 public class Users {
 
-    private String userName;
+    private String user;
 
     public Users(){
 
@@ -10,13 +12,16 @@ public class Users {
 
     public Users(String userName){
 
-        this.userName = userName;
+        this.user = userName;
 
+    }
+
+    public void setUserName(String userName) {
+        this.user = userName;   //sets username as current user name
     }
 
     public String getUserName() {
-        return userName;
+        return user;
     }
-
 
 }

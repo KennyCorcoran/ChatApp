@@ -1,5 +1,6 @@
 package com.example.magic.chatapp;
-// Kevin Corcoran C00110665
+// Name: Kevin Corcoran
+// Student No: C00110665
 
 import java.util.Date;
 
@@ -22,17 +23,13 @@ public class Message {
 
         return content;
     }
-    public void setContent(String content){
-        this.content = content; //sets content as current content
-    }
+
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;   //sets username as current user name
-    }
+   
 
     public String getTime() {
         return time;

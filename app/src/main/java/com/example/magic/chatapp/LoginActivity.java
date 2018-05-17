@@ -1,5 +1,6 @@
 package com.example.magic.chatapp;
-// Kevin Corcoran C00110665
+// Name: Kevin Corcoran
+// Student No: C00110665
 
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
+
         // sets the content layout from the login xml
         setContentView(R.layout.login);
 
@@ -80,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
+        //Error Catching
         if(email.matches(emailPattern)){
 
             // checks if the variables are not empty
@@ -106,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Invalid email or password", Toast.LENGTH_SHORT).show();
         }
 
-
+        //Auto hide for keyboard
         InputMethodManager inputManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
 
